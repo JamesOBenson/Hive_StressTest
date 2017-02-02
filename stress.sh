@@ -92,7 +92,7 @@ function post_processing () {
         echo "[WARNING]: Post processing of users file was not conducted.  File does not exist."
     fi
 
-    if [ -f ./groups.txt] ; then
+    if [ -f ./groups.txt ] ; then
         echo "[INFO]: POST PROCESSING FOR groups.txt"
         cat groups.txt | grep "seconds)" | awk '{print$4}' | cut -c 2- | \
             awk 'NR == 1 { max=$1; min=$1; sum=0 } \
