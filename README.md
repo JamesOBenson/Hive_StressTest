@@ -17,10 +17,11 @@ This is designed to stress test a Hadoop Hive system by flooding it with query's
 
 ## Files created:
 This script will create 4 files:
-- users.txt
+- users.txt (output of terminal while running user stress script)
 - users.txt.bak (once post processing is complete)
-- groups.txt
+- groups.txt (output of terminal while running group stress script)
 - groups.txt.bak (once post processing is complete)
+- out.txt (Results from query)
 
 ## How to run?
 - Download script.
