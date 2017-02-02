@@ -77,10 +77,13 @@ function query () {
 function post_processing () {
     if [ -f ./users.txt ]; then
         echo "[INFO]: POST PROCESSING FOR users.txt"
-        cat users.txt | grep "seconds)" | awk '{print$4}' | cut -c 2- | \
+        RESULTS=`cat users.txt | grep "seconds)" | awk '{print$4}' | cut -c 2- | \
             awk 'NR == 1 { max=$1; min=$1; sum=0 } \
                 { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1;} \
-                    END {printf "Min: %f\tMax: %f\tAverage: %f\tNo. of Samples:%d\n", min, max, sum/NR, NR}'
+                    END {printf "Min: %f\tMax: %f\tAverage: %f\tNo. of Samples:%d\n", min, max, sum/NR, NR}'`
+        echo $RESULTS
+        echo $RESULTS  >> user_results.txt
+        echo "Results appended to user_results.txt"
 #        cat users.txt | grep "seconds)" | awk '{print$4}' | cut -c 2-
         mv users.txt users.txt.bak
     else
@@ -89,10 +92,13 @@ function post_processing () {
 
     if [ -f ./groups.txt ] ; then
         echo "[INFO]: POST PROCESSING FOR groups.txt"
-        cat groups.txt | grep "seconds)" | awk '{print$4}' | cut -c 2- | \
+        RESULTS=`cat groups.txt | grep "seconds)" | awk '{print$4}' | cut -c 2- | \
             awk 'NR == 1 { max=$1; min=$1; sum=0 } \
                 { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1;} \
-                    END {printf "Min: %f\tMax: %f\tAverage: %f\tNo. of Samples:%d\n", min, max, sum/NR, NR}'
+                    END {printf "Min: %f\tMax: %f\tAverage: %f\tNo. of Samples:%d\n", min, max, sum/NR, NR}'`
+        echo $RESULTS
+        echo $RESULTS  >> group_results.txt
+        echo "Results appended to group_results.txt"
 #        cat groups.txt | grep "seconds)" | awk '{print$4}' | cut -c 2-
         mv groups.txt groups.txt.bak
     else
@@ -187,6 +193,7 @@ function main () {
             echo "Sleeping $SLEEP seconds... please wait..."
             sleep $SLEEP
             query "$2"
+            sleep $SLEEP
             cleanup "$2"
             echo ""
             echo "Please type 'exit' now and run post processing..."
