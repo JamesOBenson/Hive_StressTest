@@ -76,3 +76,14 @@ Auto create users/groups and conduct tests:
 ````
    ./stress.sh post_processing
 ````
+
+
+##How is this playbook licensed?
+
+It's licensed under the Apache License 2.0. The quick summary is:
+
+> A license that allows you much freedom with the software, including an explicit right to a patent. State changes means that you have to include a notice in each file you modified. 
+
+[Pull requests](https://github.com/JamesOBenson/Hive_StressTest/pulls) and [Github issues](https://github.com/JamesOBenson/Hive_StressTest/issues) are welcome!
+
+-- James
