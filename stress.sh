@@ -166,7 +166,7 @@ function main () {
             cleanup "$2"
             echo ""
             echo "Please type 'exit' now and run post processing..."
-            echo "        ./script.sh post_processing"
+            echo "        ./stress.sh post_processing"
             echo ""
         else
             echo "######################################"
@@ -190,7 +190,7 @@ function main () {
             cleanup "$2"
             echo ""
             echo "Please type 'exit' now and run post processing..."
-            echo "        ./script.sh post_processing"
+            echo "        ./stress.sh post_processing"
             echo ""
         else
             echo "######################################"
