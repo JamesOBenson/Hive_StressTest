@@ -28,8 +28,7 @@ function grant_users () {
     CMD=$1
     for i in `seq 1 $CMD`; do
         username=user$i
-        beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true \
-        -e "grant select on table foodmart.customer to user $username"
+        beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true -e "grant select on table foodmart.customer to user $username"
         echo "[INFO]: ACCESS GRANTED TO <$username> IN BEELINE"
     done
     sleep 10
@@ -42,28 +41,25 @@ function deny_users () {
     CMD=$1
     for i in `seq 1 $CMD`; do
         username=user$i
-        beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true \ 
-        -e "revoke select on table foodmart.customer from user $username;"
+        beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true -e "revoke select on table foodmart.customer from user $username;"
         echo "[INFO]: ACCESS REVOKED TO <$username> IN BEELINE"
     done
-}
-
-function deny_groups () {
-    echo ""
-    echo "Denying $GROUP_NAME access to beeline..."
-    echo ""
-    beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true \ 
-    -e "revoke select on table foodmart.customer from group $GROUP_NAME;";
-    echo "[INFO]: ACCESS REVOKED TO <$GROUP_NAME> IN BEELINE"
 }
 
 function allow_groups () {
     echo ""
     echo "Allow $GROUP_NAME access to beeline..."
     echo ""
-    beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true \ 
-    -e "grant select on table foodmart.customer to group $GROUP_NAME;";
+    beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true -e "grant select on table foodmart.customer to group $GROUP_NAME;";
     echo "[INFO]: ACCESS GRANTED TO <$GROUP_NAME> IN BEELINE"
+}
+
+function deny_groups () {
+    echo ""
+    echo "Denying $GROUP_NAME access to beeline..."
+    echo ""
+    beeline -u jdbc:hive2://$IPADDR:10000 -n $BeelineUser -p $BeelinePass --silent=true -e "revoke select on table foodmart.customer from group $GROUP_NAME;";
+    echo "[INFO]: ACCESS REVOKED TO <$GROUP_NAME> IN BEELINE"
 }
 
 function query () {
@@ -73,8 +69,7 @@ function query () {
     CMD=$1
     for i in `seq 1 $CMD`; do
         username=user$i
-        beeline -u jdbc:hive2://$IPADDR:10000 -n $username -p $username --fastConnect=true \ 
-        -e "select * from foodmart.customer;" > out.txt &
+        beeline -u jdbc:hive2://$IPADDR:10000 -n $username -p $username --fastConnect=true -e "select * from foodmart.customer;" > out.txt &
         echo "[INFO]: QUERRY SUBMITTED FOR $username"
     done
 }
