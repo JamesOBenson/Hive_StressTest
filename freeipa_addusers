@@ -1,0 +1,24 @@
+#!/bin/bash
+GROUP_NAME=group1
+TEMP_PASSWORD=testpw
+# FINAL password needs to be 8+ characters, etc.
+FINAL_PASSWORD=passworduser
+
+# Must be admin to run script:
+kinit admin
+
+# Create all of the users
+for i in {1000..1999}; do
+    username=user$i
+    echo $TEMP_PASSWORD | ipa user-add $username --first=$username --last="Test$i" --password --shell=/bin/bash
+# Join the Users to a common group
+    ipa group-add-member $GROUP_NAME --users=$username 1>/dev/null 2>/dev/null
+done 
+
+# Get past the 1-time user password.
+for i in {1000..1999}; do
+    username=user$i
+    echo "$TEMP_PASSWORD
+$FINAL_PASSWORD
+$FINAL_PASSWORD" | kinit $username
+done
