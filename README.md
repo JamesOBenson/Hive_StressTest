@@ -1,11 +1,11 @@
 # Hive_StressTest
-This is designed to stress test a Hadoop Hive system by flooding it with query's and look at the response time.  This has been verified to work on HortonWorks Sandbox HDP 2.5
+This is designed to stress test a Hadoop Hive system by flooding it with query's and look at the response time.  This has been verified to work on HortonWorks Sandbox HDP 2.5 and an HDP 2.5 cluster, with LDAP as the authentication method.
 
-**Note**: Stressing both users and groups creates N number of users.  The stress users test, looks at how the system will respond when they are given permission individually as users.  The stress groups test looks at how the system will respond when the users are given permission as a whole in a group.  All queries are conducted approximately at the same time. 
+**Note**: Stressing both users and groups creates N number of users.  The stress users test, looks at how the system will respond when they are given permission individually as users.  The stress groups test looks at how the system will respond when the users are given permission as a whole in a group.  All queries are conducted approximately at the same time.  The queries are executed in subshells so verify that your system ulimit is high, resources are adequate, etc. 
 
 ## This script has the following flow:
-- Create a group: Group1
-- Create N number of users & join them to Group1
+- Create a group: Group1 (locally)
+- Create N number of users & join them to Group1 (locally)
 - Grant users or groups access to Beeline
 - Conduct a simple Query
 - Conduct a Cleanup 
@@ -21,7 +21,8 @@ This script will create 4 files:
 - users.txt.bak (once post processing is complete)
 - groups.txt (output of terminal while running group stress script)
 - groups.txt.bak (once post processing is complete)
-- out.txt (Results from query)
+- user_results.txt (all user results get appended to this file)
+- group_results.txt (all group results get appended to this file)
 
 ## How to run?
 - Download script.
@@ -54,6 +55,7 @@ Auto create users/groups and conduct tests:
 
   Stress_users N
   Stress_groups N # users created with only 1 group
+  Stress N
 
   cleanup N
   post_processing
@@ -61,17 +63,19 @@ Auto create users/groups and conduct tests:
 
 - To execute a user stress test:
 ````
-    script users.txt
     ./stress.sh Stress_users 5
-    exit
 ````
 
 - To execute a group stress test:
 ````
-    script groups.txt
     ./stress.sh Stress_groups 5
-    exit
 ````
+
+- To execute both a user and group stress test and conduct post processing:
+````
+    ./stress.sh Stress 5
+````
+
 - To execute the post processing:
 ````
    ./stress.sh post_processing
