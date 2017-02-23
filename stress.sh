@@ -1,4 +1,3 @@
-[centos@client3 ~]$ cat stress.sh
 #!/bin/bash
 
 ulimit -u 20000
